@@ -1,10 +1,10 @@
 """Simplified Python scripting"""
 __doc__ = "Simplified Python scripting"
-import sys
-from typing import List, NamedTuple, NoReturn, Union
-import types
-import subprocess
 import os
+import subprocess
+import sys
+import types
+from typing import List, NamedTuple, NoReturn, Union
 
 __version__: str = "0.1.0"
 
@@ -33,7 +33,7 @@ class Main(types.ModuleType):
         return SubprocessOutput(proc.stdout.decode(), proc.stderr.decode())
 
     @staticmethod
-    def s(command: str) -> int:
+    def call(command: str) -> int:
         """An alias for os.system"""
         return os.system(command)
 
@@ -56,6 +56,15 @@ class Main(types.ModuleType):
             return False
         print("\x1b[33m" + "Warning: " + message + "\x1b[0m")
         return True
+
+    @staticmethod
+    def s(message: str, status: int = 1) -> NoReturn:
+        """Send a success message and exit with the exit code `status`."""
+        if os.name == "nt" or not sys.stdout.isatty():
+            print("Success: " + message)
+        else:
+            print("\x1b[32m" + "Success: " + message + "\x1b[0m")
+        sys.exit(status)
 
     @staticmethod
     def e(message: str, status: int = 1) -> NoReturn:

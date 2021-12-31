@@ -33,7 +33,7 @@ SubprocessOutput(stdout='.\n..\nfoo\n', stderr='')
 
 ```py
 >>> import x
->>> x.s("git clone https://github.com/git/git.git --depth=1")
+>>> x.call("git clone https://github.com/git/git.git --depth=1")
 Cloning into 'git'...
 remote: Enumerating objects: 4073, done.
 remote: Counting objects: 100% (4073/4073), done.
@@ -65,6 +65,15 @@ True
 >>> import x
 >>> x.w("no credentials provided")
 Warning: no credentials provided
+>>> print(_)
+True
+```
+#### Success
+
+```py
+>>> import x
+>>> x.s("Done!")
+Success: Done!
 >>> print(_)
 True
 ```
